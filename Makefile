@@ -261,34 +261,34 @@ azure-setup-all:
 	@echo ">>> 3. テンプレートファイルからYAMLファイルを生成..."
 	@$(MAKE) generate-azure-all-yaml
 
-	@echo ">>> 3. コンテナイメージのビルド..."
+	@echo ">>> 4. コンテナイメージのビルド..."
 	@$(MAKE) azure-build
 
-	@echo ">>> 4. イメージのプッシュ..."
+	@echo ">>> 5. イメージのプッシュ..."
 	@$(MAKE) azure-push
 
-	@echo ">>> 5. Container Appsへのデプロイ..."
+	@echo ">>> 6. Container Appsへのデプロイ..."
 	@$(MAKE) azure-deploy
 
 	@echo ">>> コンテナアプリ作成を待機中（20秒）..."
 	@sleep 20
 
-	@echo ">>> 5a. ポリシーとヘルスチェックの適用..."
+	@echo ">>> 6a. ポリシーとヘルスチェックの適用..."
 	@$(MAKE) azure-apply-policies
 
-	@echo ">>> 6. 環境変数の設定..."
+	@echo ">>> 7. 環境変数の設定..."
 	@$(MAKE) azure-config-update
 
 	@echo ">>> 環境変数の反映を待機中（30秒）..."
 	@sleep 30
 
-	@echo ">>> 7. 管理画面の環境変数を修正してビルド..."
+	@echo ">>> 8. 管理画面の環境変数を修正してビルド..."
 	@$(MAKE) azure-fix-client-admin
 
-	@echo ">>> 8. 環境の検証..."
+	@echo ">>> 9. 環境の検証..."
 	@$(MAKE) azure-verify
 
-	@echo ">>> 9. サービスURLの確認..."
+	@echo ">>> 10. サービスURLの確認..."
 	@$(MAKE) azure-info
 
 	@echo ">>> セットアップが完了しました。上記のURLでサービスにアクセスできます。"
@@ -350,53 +350,6 @@ azure-cleanup:
 	$(call read-env)
 	docker run -it --rm -v $(HOME)/.azure:/root/.azure mcr.microsoft.com/azure-cli az group delete --name $(RESOURCE_GROUP) --yes
 
-##############################################################################
-# YAMLテンプレートからの生成コマンド
-##############################################################################
-
-# テンプレートファイルから実際のYAMLファイルを生成するパターンルール
-%.yaml: %-template.yaml
-	$(call read-env)
-	@echo "Generating $@ from $<..."
-	@envsubst < $< > $@
-	@echo "Generated $@"
-
-# 全テンプレートファイルを検索して対応するYAMLファイルを生成
-generate-azure-all-yaml:
-	$(call read-env)
-	@echo "Generating all YAML files from templates..."
-	@for template in $$(find .azure -name "*-template.yaml"); do \
-		output=$${template%-template.yaml}.yaml; \
-		echo "Processing $$template -> $$output"; \
-		envsubst < $$template > $$output; \
-		echo "Generated $$output"; \
-	done
-	@echo "All YAML files have been generated successfully."
-
-# 特定のディレクトリ内のテンプレートからYAMLファイルを生成
-generate-azure-health-yaml:
-	$(call read-env)
-	@echo "Generating health probe YAML files..."
-	@for template in $$(find .azure/health -name "*-template.yaml"); do \
-		output=$${template%-template.yaml}.yaml; \
-		echo "Processing $$template -> $$output"; \
-		envsubst < $$template > $$output; \
-		echo "Generated $$output"; \
-	done
-	@echo "All health probe YAML files have been generated successfully."
-
-# 特定のディレクトリ内のテンプレートからYAMLファイルを生成
-generate-azure-policies-yaml:
-	$(call read-env)
-	@echo "Generating policy YAML files..."
-	@for template in $$(find .azure/policies -name "*-template.yaml"); do \
-		output=$${template%-template.yaml}.yaml; \
-		echo "Processing $$template -> $$output"; \
-		envsubst < $$template > $$output; \
-		echo "Generated $$output"; \
-	done
-	@echo "All policy YAML files have been generated successfully."
-
 # ヘルスチェック設定とイメージプルポリシーの適用
 azure-apply-policies:
 	$(call read-env)
@@ -417,3 +370,16 @@ azure-apply-policies:
 	        --yaml /workspace/.azure/policies/client-admin-pull-policy.yaml || echo '警告: 管理者クライアントポリシー適用に失敗しました' && \
 	    az containerapp update --name client-admin --resource-group $(RESOURCE_GROUP) \
 	        --yaml /workspace/.azure/health/client-admin-health-probe.yaml || echo '警告: 管理者クライアントヘルスプローブ適用に失敗しました'"
+
+
+# YAMLテンプレートからのAzure関連ファイルの生成コマンド
+generate-azure-yaml:
+	$(call read-env)
+	@echo "Generating all YAML files from templates..."
+	@for template in $$(find .azure -name "*-template.yaml"); do \
+		output=$${template%-template.yaml}.yaml; \
+		echo "Processing $$template -> $$output"; \
+		envsubst < $$template > $$output; \
+		echo "Generated $$output"; \
+	done
+	@echo "All YAML files have been generated successfully."
