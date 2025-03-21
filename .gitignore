@@ -1,6 +1,11 @@
 .env
+.env.azure
 .idea
 .next
 .DS_Store
 node_modules
 docker-compose.override.y*ml
+
+# .azure配下のYAMLファイルを除外（テンプレートファイルを除く）
+.azure/**/*.yaml
+!.azure/**/*-template.yaml
