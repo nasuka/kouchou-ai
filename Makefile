@@ -259,7 +259,7 @@ azure-setup-all:
 	@$(MAKE) azure-acr-login-auto
 
 	@echo ">>> 3. テンプレートファイルからYAMLファイルを生成..."
-	@$(MAKE) generate-azure-all-yaml
+	@$(MAKE) generate-azure-yaml
 
 	@echo ">>> 4. コンテナイメージのビルド..."
 	@$(MAKE) azure-build
