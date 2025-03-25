@@ -1,0 +1,49 @@
+version: 2
+updates:
+  # ルートディレクトリの docker-compose.yml 等（Docker 関連）
+  - package-ecosystem: "docker"
+    directory: "/" 
+    schedule:
+      interval: "weekly"
+
+  # server 内の Dockerfile 更新チェック
+  - package-ecosystem: "docker"
+    directory: "/server"
+    schedule:
+      interval: "weekly"
+
+  # client サービスの Dockerfile 更新チェック
+  - package-ecosystem: "docker"
+    directory: "/client"
+    schedule:
+      interval: "weekly"
+
+  # client-admin サービスの Dockerfile 更新チェック
+  - package-ecosystem: "docker"
+    directory: "/client-admin"
+    schedule:
+      interval: "weekly"
+
+  # GitHub Actions の依存関係更新
+  - package-ecosystem: "github-actions"
+    directory: "/" 
+    schedule:
+      interval: "weekly"
+
+  # client サービスの package.json 更新チェック（npm）
+  - package-ecosystem: "npm"
+    directory: "/client"
+    schedule:
+      interval: "weekly"
+
+  # client-admin サービスの package.json 更新チェック（npm）
+  - package-ecosystem: "npm"
+    directory: "/client-admin"
+    schedule:
+      interval: "weekly"
+
+  # server の pyproject.toml 更新チェック（pip）
+  - package-ecosystem: "pip"
+    directory: "/server"
+    schedule:
+      interval: "weekly"
