@@ -3,6 +3,7 @@ from pathlib import Path
 
 from fastapi import APIRouter
 from fastapi.responses import FileResponse
+
 from src.schemas.metadata import Metadata
 
 router = APIRouter()

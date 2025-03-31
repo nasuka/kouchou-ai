@@ -37,6 +37,8 @@ charset-normalizer==3.4.1
 click==8.1.8
     # via litellm
     # via uvicorn
+coverage==7.8.0
+    # via pytest-cov
 dataclasses-json==0.6.7
     # via langchain-community
 distro==1.9.0
@@ -68,6 +70,8 @@ idna==3.10
     # via yarl
 importlib-metadata==8.6.1
     # via litellm
+iniconfig==2.1.0
+    # via pytest
 isort==6.0.0
 janome==0.5.0
     # via server
@@ -144,10 +148,13 @@ packaging==24.2
     # via langchain-core
     # via marshmallow
     # via plotly
+    # via pytest
 pandas==2.2.3
     # via server
 plotly==6.0.0
     # via server
+pluggy==1.5.0
+    # via pytest
 propcache==0.3.0
     # via aiohttp
     # via yarl
@@ -166,6 +173,9 @@ pydantic-settings==2.7.1
     # via server
 pynndescent==0.5.13
     # via umap-learn
+pytest==8.3.5
+    # via pytest-cov
+pytest-cov==6.0.0
 python-dateutil==2.9.0.post0
     # via pandas
 python-dotenv==1.0.1
@@ -196,7 +206,8 @@ requests-toolbelt==1.0.0
 rpds-py==0.23.0
     # via jsonschema
     # via referencing
-ruff==0.9.7
+ruff==0.11.2
+    # via server
 scikit-learn==1.6.1
     # via pynndescent
     # via umap-learn
