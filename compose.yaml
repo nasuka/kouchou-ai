@@ -3,6 +3,8 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile
+      args:
+        - ENVIRONMENT=${ENVIRONMENT}
     ports:
       - "8000:8000"
     volumes:

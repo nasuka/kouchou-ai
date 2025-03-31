@@ -43,6 +43,10 @@ lint/api-check:
 lint/api-format:
 	docker compose run --rm api python -m ruff format .
 
+
+test/api:
+	docker compose run --rm api pytest tests/
+
 ##############################################################################
 # Azure初期デプロイのコマンド
 ##############################################################################

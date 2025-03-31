@@ -17,12 +17,14 @@ RUN if [ "$ENVIRONMENT" = "development" ]; then \
         echo "Installing development dependencies from requirements-dev.lock" && \
         uv pip install --no-cache --system -r requirements-dev.lock; \
     else \
+        echo "$ENVIRONMENT" && \
         echo "Installing production dependencies from requirements.lock" && \
         uv pip install --no-cache --system -r requirements.lock; \
+        pip install pytest pytest-cov; \
     fi
 
 
 COPY . .
 # アプリケーションの実行
 EXPOSE 8000
-CMD ["python", "-m", "uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+CMD ["python", "-m", "uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
