@@ -2,6 +2,8 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
+ARG ENVIRONMENT
+
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         curl \
@@ -20,7 +22,6 @@ RUN if [ "$ENVIRONMENT" = "development" ]; then \
         echo "$ENVIRONMENT" && \
         echo "Installing production dependencies from requirements.lock" && \
         uv pip install --no-cache --system -r requirements.lock; \
-        pip install pytest pytest-cov; \
     fi
 
 

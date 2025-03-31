@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import ORJSONResponse
+
 from src.config import settings
 from src.middleware.security_middleware import register_security_middleware
 from src.routers import router

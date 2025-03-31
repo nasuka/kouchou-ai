@@ -42,6 +42,7 @@ lint/api-check:
 
 lint/api-format:
 	docker compose run --rm api python -m ruff format .
+	docker compose run --rm api python -m ruff check . --fix
 
 
 test/api:

@@ -206,7 +206,8 @@ requests-toolbelt==1.0.0
 rpds-py==0.23.0
     # via jsonschema
     # via referencing
-ruff==0.9.7
+ruff==0.11.2
+    # via server
 scikit-learn==1.6.1
     # via pynndescent
     # via umap-learn
